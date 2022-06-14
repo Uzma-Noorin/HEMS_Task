@@ -106,7 +106,7 @@ namespace HEMSTest.DAL
 			catch (Exception ex)
 			{
 				string msg = ex.Message;
-				throw ex;
+				return null;
 			}
 		}
 

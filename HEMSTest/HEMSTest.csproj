@@ -129,13 +129,16 @@
     <Compile Include="CommonUtilities\CommonExtensionMEthods.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\Database.cs" />
-    <Compile Include="DAL\MapperBase.cs" />
+    <Compile Include="DAL\CategoryDataAccess.cs" />
+    <Compile Include="DAL\ProductTypeDataAccess.cs" />
     <Compile Include="DAL\ProductDataAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\ProductType.cs" />
     <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\ProductMapper.cs" />
+    <Compile Include="Models\SingleColumnResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

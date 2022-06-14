@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<link rel="stylesheet" type="text/css" href="~/Content/Site.css">
 
 <style type="text/css">
     .nav-tabs a, .nav-tabs a:hover, .nav-tabs a:focus {
@@ -26,28 +27,225 @@
             <!-- Tab panes -->
             <div class="tab-content" style="padding-top: 20px">
                 <div role="tabpanel" class="tab-pane active" id="Category">
-                    @foreach (var item in ViewBag.Products)
-                    {
-                        <div class="card">
-                            <h3>Schedule regular coffee updates</h3><span>Due in 12 days</span>
-                        </div>
-                    }
-
-                    </div>
+                    <ul class="cards">
+                        @foreach (var item in ViewBag.Categories)
+                        {
+                            <li class="cards_item">
+                                <div class="card">
+                                    <div class="card_content">
+                                        <h2 class="card_title">Category Code: @item.Product_Category_Code</h2>
+                                        <h2 class="card_subtitle">Seq # @item.Seq_Id: @item.Category_Name</h2>
+                                        <p class="card_text">@item.Category_Description</p>
+                                        <button class="btn card_btn" id="btnCategory" data-seq="@item.Seq_Id" data-code="@item.Product_Category_Code" data-name="@item.Category_Name" data-desc="@item.Category_Description">Edit</button>
+                                        <a class="btn btn-danger card_btn" href="@Url.Action("DeleteCategory", new { seqID = item.Seq_Id, CategoryCode = item.Product_Category_Code })">Delete</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="Type">
-                    TProduct Type Information Tab
+                    <ul class="cards">
+                        @foreach (var item in ViewBag.Types)
+                        {
+                            <li class="cards_item">
+                                <div class="card">
+                                    <div class="card_content">
+                                        <h2 class="card_title">Seq # @item.Seq_Id</h2>
+                                        <h2 class="card_title">Product Type Code: @item.Product_Type_Code</h2>
+                                        <h2 class="card_subtitle">Product Category Code: @item.Product_Category_Code</h2>
+                                        <h2 class="card_subtitle">Name: @item.Type_Name</h2>
+                                        <p class="card_text">@item.Type_Description</p>
+                                        <button class="btn card_btn" id="btnType" data-seq="@item.Seq_Id" data-code="@item.Product_Type_Code" data-category="@item.Product_Category_Code"  data-name="@item.Type_Name" data-desc="@item.Type_Description">Edit</button>
+                                        <a class="btn btn-danger card_btn" href="@Url.Action("DeleteProductType", new { seqID = item.Seq_Id, productTypeCode = item.Product_Type_Code })">Delete</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="Product">
-
-                    @foreach (var item in ViewBag.Products)
-                    {
-                        <div class="card">
-                            <h3>Schedule regular coffee updates</h3><span>Due in 12 days</span>
-                        </div>
-                    }
-
+                    <ul class="cards">
+                        @foreach (var item in ViewBag.Products)
+                        {
+                            <li class="cards_item">
+                                <div class="card">
+                                    <div class="card_content">
+                                        <h2 class="card_title">Seq # @item.Seq_Id</h2>
+                                        <h2 class="card_title">Product Code: @item.Product_Code</h2>
+                                        <h2 class="card_title">Product Type Code: @item.Product_Type_Code</h2>
+                                        <h2 class="card_subtitle">Product Category Code: @item.Product_Category_Code</h2>
+                                        <h2 class="card_subtitle">Name: @item.Product_Name</h2>
+                                        <p class="card_text">@item.Product_Description</p>
+                                        <button class="btn card_btn" id="btnProduct" data-seq="@item.Seq_Id" data-code="@item.Product_Code" data-category="@item.Product_Category_Code" data-type="@item.Product_Type_Code"  data-name="@item.Product_Name" data-desc="@item.Product_Description">Edit</button>
+                                        <a class="btn btn-danger card_btn" href="@Url.Action("DeleteProduct", new { seqID = item.Seq_Id, productCode = item.Product_Code })">Delete</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="category" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EditCategory", "Home",
+FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input type="hidden" id="category_code" name="category_code" />
+                    <input type="hidden" id="seq_id" name="seq_id" />
+                    <div class="form-group">
+                        <label for="category_name">Product Category Name</label>
+                        <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Product Category Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="category_des">Product Category Description</label>
+                        <input type="text" class="form-control" id="category_des" name="category_des" placeholder="Enter Product Category Description">
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            }
+            </div>
+    </div>
+</div>
+
+<div class="modal fade" id="type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EditType", "Home",
+FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input type="hidden" id="type_category_code" name="type_category_code"  />
+                    <input type="hidden" id="type_seq_id" name="type_seq_id" />
+                    <input type="hidden" id="type_code" name="type_code" />
+                    <div class="form-group">
+                        <label for="category_name">Product Type Name</label>
+                        <input type="text" class="form-control" id="type_name" name="type_name" placeholder="Enter Product Type Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="category_des">Product Type Description</label>
+                        <input type="text" class="form-control" id="type_des" name="type_des" placeholder="Enter Product Type Description">
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            }
+            </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("EditProduct", "Home",
+  FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <input type="hidden" id="prod_category_code" name="prod_category_code"/>
+                    <input type="hidden" id="prod_seq_id" name="prod_seq_id"/>
+                    <input type="hidden" id="prod_type_code" name="prod_type_code"/>
+                    <input type="hidden" id="product_code" name="product_code"/>
+                    <div class="form-group">
+                        <label for="category_name">Product Name</label>
+                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter Product Product Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="category_des">Product Description</label>
+                        <input type="text" class="form-control" id="product_des" name="product_des" placeholder="Enter Product Product Description">
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            }
+            </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#btnCategory", OpenCategoryModalPopUp);
+    });
+
+    function OpenCategoryModalPopUp() {
+        var seq = $(this).data("seq");
+        $('#seq_id').val(seq);
+        var code = $(this).data("code");
+        $('#category_code').val(code);
+        var Name = $(this).data("name");
+        $('#category_name').val(Name);
+        var desc = $(this).data("desc");
+        $('#category_des').val(desc);
+        $("#category").modal();
+    }
+
+    $(document).ready(function () {
+        $(document).on("click", "#btnType", OpenTypeModalPopUp);
+    });
+
+    function OpenTypeModalPopUp() {
+        var seq = $(this).data("seq");
+        $('#type_seq_id').val(seq);
+        var code = $(this).data("code");
+        $('#type_code').val(code);
+        var catCode = $(this).data("category");
+        $('#type_category_code').val(catCode);
+        var Name = $(this).data("name");
+        $('#type_name').val(Name);
+        var desc = $(this).data("desc");
+        $('#type_des').val(desc);
+        $("#type").modal();
+    }
+
+
+    $(document).ready(function () {
+        $(document).on("click", "#btnProduct", OpenProductModalPopUp);
+    });
+
+    function OpenProductModalPopUp() {
+        var seq = $(this).data("seq");
+        $('#prod_seq_id').val(seq);
+        var code = $(this).data("code");
+        $('#product_code').val(code);
+        var catCode = $(this).data("category");
+        $('#prod_category_code').val(catCode);
+        var typeCode = $(this).data("type");
+        $('#prod_type_code').val(typeCode);
+        var Name = $(this).data("name");
+        $('#product_name').val(Name);
+        var desc = $(this).data("desc");
+        $('#product_des').val(desc);
+        $("#product").modal();
+    }
+</script>
