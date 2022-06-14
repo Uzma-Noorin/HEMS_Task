@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<style type="text/css">
+    .nav-tabs a, .nav-tabs a:hover, .nav-tabs a:focus {
+        outline: 0;
+    }
+</style>
+
+<div class="row">
+
+
+    <div class="panel panel-default" style="width: 100%; padding: 10px; margin: 10px">
+        <div id="Tabs" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#Category" aria-controls="Category" role="tab" data-toggle="tab">
+                        Product Category
+                    </a>
+                </li>
+                <li><a href="#Type" aria-controls="Type" role="tab" data-toggle="tab">Product Type</a></li>
+                <li><a href="#Product" aria-controls="Product" role="tab" data-toggle="tab">Product</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" style="padding-top: 20px">
+                <div role="tabpanel" class="tab-pane active" id="Category">
+                    @foreach (var item in ViewBag.Products)
+                    {
+                        <div class="card">
+                            <h3>Schedule regular coffee updates</h3><span>Due in 12 days</span>
+                        </div>
+                    }
+
+                    </div>
+                <div role="tabpanel" class="tab-pane" id="Type">
+                    TProduct Type Information Tab
+                </div>
+                <div role="tabpanel" class="tab-pane" id="Product">
+
+                    @foreach (var item in ViewBag.Products)
+                    {
+                        <div class="card">
+                            <h3>Schedule regular coffee updates</h3><span>Due in 12 days</span>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
